@@ -71,3 +71,5 @@ export const trad: {
     },
   },
 };
+
+// TODO: Add the following to the trad object:
