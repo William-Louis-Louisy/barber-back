@@ -30,8 +30,8 @@ app.use(
       "*",
       "localhost:3000",
       "http://localhost:3000",
-      "https://barber-api.check-this-one.com",
-      "barber-api.check-this-one.com",
+      "https://tommy-barber.vercel.app",
+      "tommy-barber.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
@@ -54,7 +54,7 @@ app.listen(process.env.PORT, async () => {
   console.log(`🟢 Listening on port ${process.env.PORT}`);
 
   // Initialize time slots
-  // await initializeTimeSlots();
+  await initializeTimeSlots();
 
   // Add time slots for next day
   cron.schedule("0 0 * * *", async () => {
