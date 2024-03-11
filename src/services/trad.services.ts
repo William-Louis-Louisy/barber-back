@@ -73,3 +73,5 @@ export const trad: {
 };
 
 // TODO: Add the following to the trad object:
+
+// The following keys are missing from the trad object:
