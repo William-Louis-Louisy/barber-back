@@ -26,7 +26,13 @@ const app = express();
 // MIDDLEWARE
 app.use(
   cors({
-    origin: ["*", "localhost:3000", "http://localhost:3000"],
+    origin: [
+      "*",
+      "localhost:3000",
+      "http://localhost:3000",
+      "https://barber-api.check-this-one.com",
+      "barber-api.check-this-one.com",
+    ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: [
