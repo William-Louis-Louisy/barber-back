@@ -48,7 +48,7 @@ app.listen(process.env.PORT, async () => {
   console.log(`🟢 Listening on port ${process.env.PORT}`);
 
   // Initialize time slots
-  await initializeTimeSlots();
+  // await initializeTimeSlots();
 
   // Add time slots for next day
   cron.schedule("0 0 * * *", async () => {
