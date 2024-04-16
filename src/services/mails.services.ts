@@ -22,8 +22,12 @@ export const sendAppointmentConfirmationToUser = async (
   service: any,
   lang: string
 ) => {
-  const formattedDate = moment(appointment.date).local().format("DD/MM/YYYY");
-  const formattedTime = moment(appointment.date).local().format("HH:mm");
+  const formattedDate = moment(appointment.date)
+    .tz("Europe/Paris")
+    .format("DD/MM/YYYY");
+  const formattedTime = moment(appointment.date)
+    .tz("Europe/Paris")
+    .format("HH:mm");
 
   const htmlContent = `
   <!DOCTYPE html>
@@ -144,8 +148,12 @@ export const sendAppointmentConfirmationToBusiness = async (
   business: any,
   service: any
 ) => {
-  const formattedDate = moment(appointment.date).local().format("DD/MM/YYYY");
-  const formattedTime = moment(appointment.date).local().format("HH:mm");
+  const formattedDate = moment(appointment.date)
+    .tz("Europe/Paris")
+    .format("DD/MM/YYYY");
+  const formattedTime = moment(appointment.date)
+    .tz("Europe/Paris")
+    .format("HH:mm");
 
   const htmlContent = `
   <!DOCTYPE html>
