@@ -1,7 +1,7 @@
 import { trad } from "./trad.services";
 
 const nodemailer = require("nodemailer");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 // SET UP TRANSPORTER
 const transporter = nodemailer.createTransport({
