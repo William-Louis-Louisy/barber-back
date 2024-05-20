@@ -1,6 +1,9 @@
 import { Response, Request } from "express";
 import ScheduleSchema from "../models/schedule.models";
+import AppointmentSchema from "../models/appointment.models";
 import { ISchedule, ITimeSlot } from "../interfaces/schemas.interfaces";
+import TimeSlotSchema from "../models/timeslot.models";
+import mongoose from "mongoose";
 
 function padTo2Digits(num: number) {
   return num.toString().padStart(2, "0");
@@ -108,6 +111,84 @@ export const scheduleController = {
       });
       await schedule.save();
       res.status(200).json({ status: 200, message: "Time slots updated" });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  },
+
+  // TURN TIME SLOTS INTO AVAILABLE EXCEPT THOSE RESERVED FOR AN APPOINTMENT
+  turnTimeSlotsAvailable: async function (req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const schedule = await ScheduleSchema.findById(id);
+      if (!schedule) {
+        return res.status(400).json({ error: "Schedule not found" });
+      }
+
+      const appointment = await AppointmentSchema.find({ scheduleId: id });
+      if (!appointment.length) {
+        // Si aucun rendez-vous, marquer tous les créneaux comme disponibles
+        schedule.timeSlots.forEach((slot) => (slot.available = true));
+      } else {
+        const notReservedSlots = schedule.timeSlots.filter((slot) => {
+          return !appointment.some((app) => app.timeSlots.includes(slot._id));
+        });
+
+        notReservedSlots.forEach((slot) => (slot.available = true));
+      }
+
+      await schedule.save();
+      res.status(200).json({ status: 200, message: "Time slots updated" });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  },
+
+  // TURN A TIME SLOT INTO AVAILABLE
+  turnTimeSlotAvailable: async function (req: Request, res: Response) {
+    const { scheduleId, timeSlotId } = req.params;
+    try {
+      const schedule = await ScheduleSchema.findById(scheduleId);
+      if (!schedule) {
+        return res.status(400).json({ error: "Schedule not found" });
+      }
+
+      const timeSlot = schedule.timeSlots.find((slot) =>
+        slot._id.equals(new mongoose.Types.ObjectId(timeSlotId))
+      );
+
+      if (!timeSlot) {
+        return res.status(400).json({ error: "Time slot not found" });
+      }
+
+      timeSlot.available = true;
+      await schedule.save();
+      res.status(200).json({ status: 200, message: "Time slot updated" });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  },
+
+  // TURN A TIME SLOT INTO UNAVAILABLE
+  turnTimeSlotUnavailable: async function (req: Request, res: Response) {
+    const { scheduleId, timeSlotId } = req.params;
+    try {
+      const schedule = await ScheduleSchema.findById(scheduleId);
+      if (!schedule) {
+        return res.status(400).json({ error: "Schedule not found" });
+      }
+
+      const timeSlot = schedule.timeSlots.find((slot) =>
+        slot._id.equals(new mongoose.Types.ObjectId(timeSlotId))
+      );
+
+      if (!timeSlot) {
+        return res.status(400).json({ error: "Time slot not found" });
+      }
+
+      timeSlot.available = false;
+      await schedule.save();
+      res.status(200).json({ status: 200, message: "Time slot updated" });
     } catch (err) {
       res.status(400).json({ error: err });
     }
