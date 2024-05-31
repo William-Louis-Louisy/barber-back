@@ -141,6 +141,24 @@ export const appointmentController = {
     }
   },
 
+  // RETRIEVE ALL APPOINTMENTS
+  getAllAppointments: async function (req: Request, res: Response) {
+    try {
+      const appointments = await AppointmentSchema.find()
+        .populate("service user", "-password")
+        .select("_id date service scheduleId timeSlots")
+        .sort("date");
+
+      if (!appointments) {
+        return res.status(404).json({ error: "No appointments found" });
+      }
+
+      return res.status(200).json(appointments);
+    } catch (err) {
+      return res.status(400).json({ error: err });
+    }
+  },
+
   // DELETE APPOINTMENT
   deleteAppointment: async function (req: Request, res: Response) {
     const { id } = req.params;

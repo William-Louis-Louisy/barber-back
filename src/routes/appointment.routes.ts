@@ -21,6 +21,12 @@ appointmentRouter.get(
   appointmentController.getAppointmentsByDate
 );
 
+// GET ALL APPOINTMENTS
+appointmentRouter.get(
+  "/get-all-appointments",
+  appointmentController.getAllAppointments
+);
+
 // DELETE APPOINTMENT
 appointmentRouter.delete(
   "/delete-appointment/:id",
