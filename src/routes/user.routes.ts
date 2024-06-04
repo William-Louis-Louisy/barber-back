@@ -21,4 +21,7 @@ userRouter.get("/logout", userController.logout);
 // GET USERS WITHOUT PASSWORDS
 userRouter.get("/retrieve-users-list", userController.getUsers);
 
+// DELETE USER
+userRouter.delete("/delete-user/:userId", userController.deleteUser);
+
 export default userRouter;
