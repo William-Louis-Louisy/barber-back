@@ -24,4 +24,10 @@ userRouter.get("/retrieve-users-list", userController.getUsers);
 // DELETE USER
 userRouter.delete("/delete-user/:userId", userController.deleteUser);
 
+// REQUEST PASSWORD RESET
+userRouter.post("/request-password-reset", userController.requestPasswordReset);
+
+// RESET PASSWORD
+userRouter.post("/reset-password", userController.resetPassword);
+
 export default userRouter;
