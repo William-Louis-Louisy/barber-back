@@ -116,7 +116,7 @@ export const sendResetPasswordEmail = async (
           <h1 class="hello">${trad[lang].passwordReset.hello}</h1>
           <p>${trad[lang].passwordReset.resetPassword}</p>
           <p>${trad[lang].passwordReset.clickLink}</p>
-          <a class="button" href="http://localhost:3000/resetPassword/${token}">${trad[lang].passwordReset.subject}</a>
+          <a class="button" href="https://tommy-barber.vercel.app/resetPassword/${token}">${trad[lang].passwordReset.subject}</a>
           <p>${trad[lang].passwordReset.linkValid}</p>
           <p class="ignore">${trad[lang].passwordReset.ignore}</p>
         </div>
