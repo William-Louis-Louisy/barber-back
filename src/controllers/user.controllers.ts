@@ -1,6 +1,11 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import UserSchema from "../models/user.models";
+import {
+  sendResetPasswordEmail,
+  setResetPasswordToken,
+  verifyToken,
+} from "../services/password.services";
 
 // CREATE TOKEN
 const maxAge = 30 * 24 * 60 * 60;
@@ -147,6 +152,54 @@ export const userController = {
       }
 
       res.status(200).json({ message: "User deleted" });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  },
+
+  // REQUEST PASSWORD RESET
+  requestPasswordReset: async function (req: Request, res: Response) {
+    const { mail, lang } = req.body;
+
+    try {
+      // Set the reset password token and expiration date for the user
+      const { user, resetPasswordToken } = await setResetPasswordToken(mail);
+
+      // Send an email to the user with the reset password link
+      await sendResetPasswordEmail(mail, resetPasswordToken, lang);
+
+      res.status(200).json({ message: "Email sent" });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  },
+
+  // RESET PASSWORD
+  resetPassword: async function (req: Request, res: Response) {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    try {
+      // Find the user with the provided reset password token
+      const user = await verifyToken(token);
+
+      // If the user is not found, return an error
+      if (!user) {
+        return res.status(400).json({ error: "Invalid token" });
+      }
+
+      // Set the new password and reset the reset password token and expiration date
+      user.password = password;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordTokenExpiration = undefined;
+
+      // Save the user
+      await user.save();
+
+      res.status(200).json({ message: "Password reset" });
     } catch (err) {
       res.status(400).json({ error: err });
     }

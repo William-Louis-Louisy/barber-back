@@ -23,6 +23,17 @@ export const trad: {
       on: "Le",
       at: "à",
     },
+    passwordReset: {
+      subject: "Réinitialisation de mot de passe",
+      hello: "Bonjour, ",
+      resetPassword:
+        "Vous avez demandé la réinitialisation de votre mot de passe.",
+      clickLink:
+        "Cliquez sur le lien suivant pour réinitialiser votre mot de passe.",
+      linkValid: "Ce lien est valide pour une durée de 1 heure.",
+      ignore:
+        "Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email.",
+    },
   },
   en: {
     businessConfirmation: {
@@ -46,6 +57,14 @@ export const trad: {
       on: "On",
       at: "at",
     },
+    passwordReset: {
+      subject: "Password Reset",
+      hello: "Hello, ",
+      resetPassword: "You have requested to reset your password.",
+      clickLink: "Click the following link to reset your password.",
+      linkValid: "This link is valid for 1 hour.",
+      ignore: "If you did not request this reset, please ignore this email.",
+    },
   },
   es: {
     businessConfirmation: {
@@ -68,6 +87,16 @@ export const trad: {
       thanks: "Gracias por elegir",
       on: "El",
       at: "a las",
+    },
+    passwordReset: {
+      subject: "Restablecimiento de Contraseña",
+      hello: "Hola, ",
+      resetPassword: "Has solicitado restablecer tu contraseña.",
+      clickLink:
+        "Haga clic en el siguiente enlace para restablecer su contraseña.",
+      linkValid: "Este enlace es válido por 1 hora.",
+      ignore:
+        "Si no solicitó este restablecimiento, ignore este correo electrónico.",
     },
   },
 };

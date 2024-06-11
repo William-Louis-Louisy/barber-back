@@ -6,6 +6,8 @@ export interface IUser extends Document {
   password: string;
   firstName: string;
   isAdmin?: boolean;
+  resetPasswordToken?: string;
+  resetPasswordTokenExpiration?: Date;
 }
 
 export interface IService extends Document {

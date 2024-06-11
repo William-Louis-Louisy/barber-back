@@ -8,6 +8,8 @@ const UserSchema = new Schema<IUser>({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   isAdmin: { type: Boolean },
+  resetPasswordToken: { type: String },
+  resetPasswordTokenExpiration: { type: Date },
 });
 
 // Middleware to hash password before saving
